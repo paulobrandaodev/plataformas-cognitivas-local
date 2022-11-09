@@ -48,6 +48,30 @@ def call_modelo01(request = request):
 
     return app.response_class(response=ret, mimetype='application/json')
 
+@app.route("/modelo02", methods=['POST'])
+def call_modelo02(request = request):
+    print(request.values)
+
+    json_ = request.json
+    campos = pd.DataFrame(json_)
+
+    if campos.shape[0] == 0:
+        return "Dados de chamada da API estão incorretos.", 400
+
+    print("Predizendo com modelo 2 para {0} registros".format(campos.shape[0]))
+
+    for col in modelo02.independentcols:
+        if col not in campos.columns:
+            campos[col] = 0
+    x = campos[modelo02.independentcols]
+
+    prediction = modelo02.predict(x)
+
+
+    ret = json.dumps({'prediction': list(prediction)}, cls=NpEncoder)
+
+    return app.response_class(response=ret, mimetype='application/json')
+
 if __name__ == '__main__':
     modelo01 = joblib.load( '../models/modelo01.joblib')
     modelo02 = joblib.load( '../models/modelo02.joblib')

@@ -17,7 +17,19 @@ if __name__ == "__main__":
 
     #Chama API
     response = requests.request("POST", url, headers=headers, data=conteudo)
-    print("Resposta da API:")
+    print("Resposta da API de Classificação:")
     print(response.text.encode('utf8').decode())
+
+
+    # Prepara chamada
+    url = "http://localhost:8080/modelo02"
+    headers = {'Content-Type': 'application/json'}
+    conteudo = filtrados.to_json()
+
+    #Chama API
+    response = requests.request("POST", url, headers=headers, data=conteudo)
+    print("Resposta da API de Regressão:")
+    print(response.text.encode('utf8').decode())
+
     pass
 

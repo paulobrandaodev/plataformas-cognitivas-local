@@ -16,3 +16,20 @@
 
 # Extra: Opcional
 # Gravar em arquivo CSV sequencial
+
+import requests
+import pandas as pd
+
+if __name__ == "__main__":
+    # Prepara chamada
+    url = "http://localhost:8080/modelo02"
+    headers = {'Content-Type': 'application/json'}
+    conteudo = requests.request("GET", 'https://us-central1-emf-teacher.cloudfunctions.net/function-aulas-getclient?qtde=8', headers=headers)
+
+    #Chama API
+    response = requests.request("POST", url, headers=headers, data=conteudo)
+    print("Resposta da API de Regressão:")
+    print(response.text.encode('utf8').decode())
+
+    pass
+
