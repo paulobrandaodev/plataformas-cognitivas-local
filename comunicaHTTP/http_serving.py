@@ -52,6 +52,85 @@ def call_soma(request = request):
         ret = json.dumps({"error_message": str(err)})
         return app.response_class(response=ret, status=500, mimetype='application/json')
 
+@app.route("/subtracao", methods=['GET', 'POST'])
+def call_sub(request = request):
+    print(f"Sou o processo server, id: {os.getpid()}, thread: {threading.current_thread().ident}")
+    print(request.values)
+
+    try:
+        p1 = request.values.get('p1')
+        if p1 is None:
+            raise NotImplementedError("Parametro p1 obrigatório.")
+        p2 = request.values.get('p2')
+
+        try:
+            par1 = float(p1)
+            par2 = float(p2)
+        except:
+            raise Exception("Os parâmetros da subtração devem ser numéricos.")
+
+        ret = json.dumps({'resultado': par1 - par2,
+                          'operacao': "Subtração",
+                          'mensagem': "Obrigado pela chamada de API",
+                          'autor': "Elthon Manhas de Freitas"}, cls=NpEncoder)
+        return app.response_class(response=ret, status=200, mimetype='application/json')
+    except Exception as err:
+        ret = json.dumps({"error_message": str(err)})
+        return app.response_class(response=ret, status=500, mimetype='application/json')
+
+@app.route("/divisao", methods=['GET', 'POST'])
+def call_div(request = request):
+    print(f"Sou o processo server, id: {os.getpid()}, thread: {threading.current_thread().ident}")
+    print(request.values)
+
+    try:
+        p1 = request.values.get('p1')
+        if p1 is None:
+            raise NotImplementedError("Parametro p1 obrigatório.")
+        p2 = request.values.get('p2')
+
+        try:
+            par1 = float(p1)
+            par2 = float(p2)
+        except:
+            raise Exception("Os parâmetros da divisão devem ser numéricos.")
+
+        ret = json.dumps({'resultado': par1 / par2,
+                          'operacao': "divisao",
+                          'mensagem': "Obrigado pela chamada de API",
+                          'autor': "Elthon Manhas de Freitas"}, cls=NpEncoder)
+        return app.response_class(response=ret, status=200, mimetype='application/json')
+    except Exception as err:
+        ret = json.dumps({"error_message": str(err)})
+        return app.response_class(response=ret, status=500, mimetype='application/json')
+
+@app.route("/multiplicacao", methods=['GET', 'POST'])
+def call_multi(request = request):
+    print(f"Sou o processo server, id: {os.getpid()}, thread: {threading.current_thread().ident}")
+    print(request.values)
+
+    try:
+        p1 = request.values.get('p1')
+        if p1 is None:
+            raise NotImplementedError("Parametro p1 obrigatório.")
+        p2 = request.values.get('p2')
+
+        try:
+            par1 = float(p1)
+            par2 = float(p2)
+        except:
+            raise Exception("Os parâmetros da multiplicação devem ser numéricos.")
+
+        ret = json.dumps({'resultado': par1 * par2,
+                          'operacao': "multiplicacao",
+                          'mensagem': "Obrigado pela chamada de API",
+                          'autor': "Elthon Manhas de Freitas"}, cls=NpEncoder)
+        return app.response_class(response=ret, status=200, mimetype='application/json')
+    except Exception as err:
+        ret = json.dumps({"error_message": str(err)})
+        return app.response_class(response=ret, status=500, mimetype='application/json')
+
+
 if __name__ == '__main__':
     print(f"Sou o processo server, id: {os.getpid()}, thread: {threading.current_thread().ident}")
     app.run(port=8080, host='0.0.0.0')
